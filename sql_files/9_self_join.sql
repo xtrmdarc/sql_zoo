@@ -9,7 +9,7 @@ select distinct id,name
 from stops 
 join route on stop = id
 where company = 'LRT' and num = 4
-order by name;
+order by pos;
 
 SELECT company, num, COUNT(*)
 FROM route WHERE stop=149 OR stop=53
@@ -52,3 +52,12 @@ WHERE stopa.name='Craiglockhart' and a.company = 'LRT';
 SELECT a.company, a.num,a.stop, b.company, b.num,b.stop
 FROM route a JOIN route b ON
   (a.stop = 53 and b.stop=147) ;
+
+
+SELECT a.num, a.company, stopb.name, d.num, d.company
+FROM route a JOIN route b on ( a.num = b.num and a.company = b.company) 
+JOIN route c on (b.stop = c.stop) JOIN route d on (c.num = d.num and c.company = d.company and d.stop = 147 )
+JOIN stops stopa on a.stop = stopa.id 
+JOIN stops stopb on b.stop = stopb.id
+where a.stop = 53
+order by a.num, stopb.name, d.num
